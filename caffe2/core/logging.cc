@@ -150,9 +150,16 @@ bool IsGoogleLoggingInitialized();
 namespace caffe2 {
 bool InitCaffeLogging(int* argc, char** argv) {
   if (*argc == 0) return true;
-  if (!::google::glog_internal_namespace_::IsGoogleLoggingInitialized()) {
+#if !defined(_MSC_VER)
+  // This trick can only be used on UNIX platforms
+  if (!::google::glog_internal_namespace_::IsGoogleLoggingInitialized())
+#endif
+  {
     ::google::InitGoogleLogging(argv[0]);
+#if !defined(_MSC_VER)
+  // This is never defined on Windows
     ::google::InstallFailureSignalHandler();
+#endif
   }
   // If caffe2_log_level is set and is lower than the min log level by glog,
   // we will transfer the caffe2_log_level setting to glog to override that.

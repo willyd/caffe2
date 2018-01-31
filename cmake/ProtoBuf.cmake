@@ -56,7 +56,7 @@ endfunction()
 if (WIN32)
   find_package(Protobuf NO_MODULE)
   if(Protobuf_FOUND OR PROTOBUF_FOUND)
-    set(PROTOBUF_LIBRARIES protobuf::libprotobuf PARENT_SCOPE)
+    set(PROTOBUF_LIBRARIES protobuf::libprotobuf)
     get_target_property(_protobuf_include_dir protobuf::libprotobuf
                         INTERFACE_INCLUDE_DIRECTORIES)
     set(PROTOBUF_INCLUDE_DIRS ${_protobuf_include_dir})
